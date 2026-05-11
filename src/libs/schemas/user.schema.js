@@ -10,9 +10,10 @@ export const userSchema = z.object({
     phone: z.string({ error: "Phone is required" })
         .check(minLength(6), maxLength(16)).optional(),
     password: z.string({ error: "Password is required" }).check(minLength(6), regex(passwordRegex, { error: "Password must be contain lowercase uppercas number and spacial character" })),
-    roles: z
-    .array(z.enum([ROLE_CUSTOMER, ROLE_MERCHANT, ROLE_ADMIN,ROLE_SUPER_ADMIN]))
-    .default([ROLE_CUSTOMER]),
+ roles: z
+  .array(z.enum([ROLE_CUSTOMER, ROLE_MERCHANT, ROLE_ADMIN, ROLE_SUPER_ADMIN]))
+  .default([ROLE_CUSTOMER]) // Default value pahila
+  .optional(),               // Optional pachi
     address: z.object({
         street: z.string().optional(),
         city: z.string(),

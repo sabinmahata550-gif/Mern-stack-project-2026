@@ -14,12 +14,12 @@ import logger from "./middlewares/logger.js";
 const upload = multer({ storage: multer.memoryStorage() })
 
 const app = express()
-app.use(logger);
 connectDB();
 connectCloudinary();
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
+app.use(logger);
 app.get("/", (request, response) => {
     response.json({
         status: "ok",

@@ -4,7 +4,6 @@ import jwt from "../utils/jwt.js";
 const userRegister = async (req, res) => {
     try {
         const input = req.body;
-
         if (!input.email || !input.password) {
             return res.status(400).json({ message: "Invalid data" });
         }

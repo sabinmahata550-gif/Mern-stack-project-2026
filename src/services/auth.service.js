@@ -5,7 +5,7 @@ import config from '../config/config.js';
 import sendEmail from '../utils/email.js';
 import { ROLE_ADMIN } from '../constants/roles.js';
 const register = async (data) => {
-    console.log(data)
+    console.log("data is",data)
     try {
         const existingUser = await User.findOne({ email: data.email });
 
