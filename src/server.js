@@ -10,9 +10,11 @@ import connectCloudinary from './config/cloudinary.js'
 import userRouter from './routes/user.routes.js'
 import auth from './middlewares/auth.js'
 import router from './routes/order.route.js'
+import logger from "./middlewares/logger.js";
 const upload = multer({ storage: multer.memoryStorage() })
 
 const app = express()
+app.use(logger);
 connectDB();
 connectCloudinary();
 app.use(morgan('dev'));
