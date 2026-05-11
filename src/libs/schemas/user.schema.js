@@ -12,7 +12,7 @@ export const userSchema = z.object({
     password: z.string({ error: "Password is required" }).check(minLength(6), regex(passwordRegex, { error: "Password must be contain lowercase uppercas number and spacial character" })),
     roles: z.array(
         z.enum([ROLE_ADMIN, ROLE_CUSTOMER, ROLE_MERCHANT])
-    ),
+    ).default([ROLE_CUSTOMER]),
     address: z.object({
         street: z.string().optional(),
         city: z.string(),
