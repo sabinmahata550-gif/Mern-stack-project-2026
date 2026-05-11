@@ -1,6 +1,6 @@
 import z, { maxLength, minLength, regex } from "zod";
 import { emailRejex, passwordRegex } from "../../constants/rejex.js";
-import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_MERCHANT } from "../../constants/roles.js";
+import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_MERCHANT, ROLE_SUPER_ADMIN } from "../../constants/roles.js";
 
 
 export const userSchema = z.object({
@@ -10,9 +10,9 @@ export const userSchema = z.object({
     phone: z.string({ error: "Phone is required" })
         .check(minLength(6), maxLength(16)).optional(),
     password: z.string({ error: "Password is required" }).check(minLength(6), regex(passwordRegex, { error: "Password must be contain lowercase uppercas number and spacial character" })),
-    roles: z.array(
-        z.enum([ROLE_ADMIN, ROLE_CUSTOMER, ROLE_MERCHANT])
-    ).default([ROLE_CUSTOMER]),
+    roles: z
+    .array(z.enum([ROLE_CUSTOMER, ROLE_MERCHANT, ROLE_ADMIN,ROLE_SUPER_ADMIN]))
+    .default([ROLE_CUSTOMER]),
     address: z.object({
         street: z.string().optional(),
         city: z.string(),
