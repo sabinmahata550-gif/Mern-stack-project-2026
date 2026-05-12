@@ -16,7 +16,8 @@ const config = {
         secretKey: process.env.KHALTI_SECRET_KEY || "",
         returnUrl: process.env.KHALTI_RETURN_URL || ""
     },
-    resendEmailApiKey: process.env.RESEND_EMAIL_API_KEY || ""
+    resendEmailApiKey: process.env.RESEND_EMAIL_API_KEY || "",
+    GEMINI_API_KEY:process.env.GEMINI_API_KEY||""
 }
 
 export default config;

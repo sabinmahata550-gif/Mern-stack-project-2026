@@ -1,13 +1,17 @@
 import { json } from "zod";
 import Product from "../models/Product.js";
 import uploadFile from "../utils/fileuploader.js";
+import { PRODUCT_DESCRIPTION_PROMPT } from "../constants/prompt.js";
+import promptAI from "../utils/ai.js";
 
 const createProduct = async (data, userid, files) => {
     try {
         const uploadedFiles = files ? await uploadFile(files) : [];
-
+        const prometMessage=PRODUCT_DESCRIPTION_PROMPT.replace("%s",data.name).replace("%s",data.category).replace("%s",data.brand);
+        const description=data.description??(await promptAI(prometMessage))
         const product = await Product.create({
             ...data,
+            description,
             createdBy: userid,
             imageUrls: uploadedFiles.map(file => file.url)
         });
