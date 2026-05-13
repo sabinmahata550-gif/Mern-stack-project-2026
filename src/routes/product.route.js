@@ -17,7 +17,7 @@ productRouter.post("/",
     auth, roleBasedAuth(ROLE_MERCHANT), validate(productSchema),
     productController.createMyProduct);
 productRouter.get("/", auth, productController.getAllMyProduct);
-productRouter.get("/:id", auth, productController.getById);
+productRouter.get("/:id", auth, productController.getProductById);
 
 productRouter.put("/:id", auth, roleBasedAuth(ROLE_MERCHANT), productController.updateMyProduct);
 productRouter.delete("/:id", auth, roleBasedAuth(ROLE_ADMIN), productController.deleteMyProduct);

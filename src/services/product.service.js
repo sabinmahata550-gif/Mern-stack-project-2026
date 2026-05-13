@@ -7,8 +7,9 @@ import promptAI from "../utils/ai.js";
 const createProduct = async (data, userid, files) => {
     try {
         const uploadedFiles = files ? await uploadFile(files) : [];
-        const prometMessage=PRODUCT_DESCRIPTION_PROMPT.replace("%s",data.name).replace("%s",data.category).replace("%s",data.brand);
-        const description=data.description??(await promptAI(prometMessage))
+        const prometMessage = PRODUCT_DESCRIPTION_PROMPT.replace("%s", data.name).replace("%s", data.category).replace("%s", data.brand);
+        const description = data.description ?? (await promptAI(prometMessage)) ?? "No description available at the moment.";
+
         const product = await Product.create({
             ...data,
             description,
@@ -23,7 +24,7 @@ const createProduct = async (data, userid, files) => {
         throw error;
     }
 };
-const getProduct = async (query) => {
+const getAllProduct = async (query) => {
     const sort = query.sort ? JSON.parse(query.sort) : {}
     const limit = query.limit ?? 10
     const offset = query.offset ?? 0
@@ -47,12 +48,12 @@ const getProduct = async (query) => {
     }
 }
 
-const getById=async(id)=>{
-    return await Product.getById(id);
+const getProductById = async (id) => {
+    return await Product.findById(id);
 }
 const updateProduct = async (id, files, data, userid) => {
     try {
-        
+
         let updatePayload = { ...data };
         if (files && files.length > 0) {
             const uploadedFiles = await uploadFile(files);
@@ -90,4 +91,4 @@ const getCategories = async () => {
 const getTotalCount = async () => {
     return await Product.countDocuments();
 }
-export default { createProduct,getById, getProduct, updateProduct, deleteProduct, getBrand, getCategories, getTotalCount }
+export default { createProduct, getProductById, getAllProduct, updateProduct, deleteProduct, getBrand, getCategories, getTotalCount }

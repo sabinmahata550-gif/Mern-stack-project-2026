@@ -12,6 +12,7 @@ import auth from './middlewares/auth.js'
 import router from './routes/order.route.js'
 import logger from "./middlewares/logger.js";
 import promptAI from './utils/ai.js'
+import pageRouter from './routes/page.route.js'
 const upload = multer({ storage: multer.memoryStorage() })
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 app.use(logger);
+app.set('view engine', 'hbs');
 app.get("/", (request, response) => {
     response.json({
         status: "ok",
@@ -32,24 +34,7 @@ app.use("/api/auth/products", upload.array('images', 5), productRouter);
 app.use("/api/auth", authrouter)
 app.use("/api/orders", auth, router)
 app.use("/api/users", auth, upload.single("images"), userRouter)
-
-app.post("/api/ai", async (req, res) => {
-  try {
-    const result = await promptAI(req.body.prompt);
-
-    res.status(200).json({
-      success: true,
-      data: result,
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-    });
-  }
-});
+app.use("/pages",pageRouter)
 app.listen(config.port, () => {
     console.log(`Example app listening on port ${config.port}`)
 })

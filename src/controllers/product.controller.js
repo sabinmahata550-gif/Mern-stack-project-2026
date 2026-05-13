@@ -27,7 +27,7 @@ const getAllMyProduct = async (req, res) => {
     try {
         const query = req.query;
         console.log(query)
-        const product = await productService.getProduct(query);
+        const product = await productService.getAllProduct(query);
 
         res.status(200).json({   // ❗ change 201 → 200
             message: "All products fetched",
@@ -40,9 +40,9 @@ const getAllMyProduct = async (req, res) => {
         });
     }
 };
-const getById=async(req,res)=>{
+const getProductById=async(req,res)=>{
     try {
-        const userId=await productService.getById(req.params.id)
+        const userId=await productService.getProductById(req.params.id)
            res.status(200).json({   // ❗ change 201 → 200
             message: "getByid are successfully",
             data:userId
@@ -118,7 +118,7 @@ const getTotalCount = async (req, res) => {
 export default {
     createMyProduct,
     getAllMyProduct,
-    getById,
+    getProductById,
     updateMyProduct,
     deleteMyProduct,
     getBrand,

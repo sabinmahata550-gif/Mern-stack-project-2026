@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>My-Products</title>
+
+    <style>
+table tr,th,td{
+    padding: 10px;
+}
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Action</th>
+
+        </tr>
+        {{#each products}}
+        <tr>
+            <td>{{_id}}</td>
+            <td>{{name}}</td>
+            <td>{{price}}</td>
+            <td>{{brand}}</td>
+            <td>{{category}}</td>
+            <td>
+                <a href="product/{{id}}">view</a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
+
+</html>
