@@ -24,6 +24,7 @@ const createProduct = async (data, userid, files) => {
         throw error;
     }
 };
+
 const getAllProduct = async (query) => {
     const sort = query.sort ? JSON.parse(query.sort) : {}
     const limit = query.limit ?? 10

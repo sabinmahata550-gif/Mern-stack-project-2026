@@ -1,25 +1,55 @@
-import productController from "../controllers/product.controller.js";
-import auth from "../middlewares/auth.js"
 import { Router } from "express";
+import productController from "../controllers/product.controller.js";
+import auth from "../middlewares/auth.js";
 import roleBasedAuth from "../middlewares/roleBasedAuth.js";
 import { ROLE_ADMIN, ROLE_MERCHANT } from "../constants/roles.js";
-import { productSchema } from "../libs/schemas/produc.schema.js";
 import validate from "../middlewares/validator.js";
+import { productSchema } from "../libs/schemas/produc.schema.js";
 
 const productRouter = Router();
-productRouter.get("/brands", auth, productController.getBrand);
-productRouter.get("/categories", auth, productController.getCategories);
-productRouter.get("/count", auth, productController.getTotalCount);
 
 
+// Get all brands
+productRouter.get("/brands", productController.getBrand);
 
-productRouter.post("/",
-    auth, roleBasedAuth(ROLE_MERCHANT), validate(productSchema),
-    productController.createMyProduct);
-productRouter.get("/", auth, productController.getAllMyProduct);
-productRouter.get("/:id", auth, productController.getProductById);
+// Get all categories
+productRouter.get("/categories", productController.getCategories);
 
-productRouter.put("/:id", auth, roleBasedAuth(ROLE_MERCHANT), productController.updateMyProduct);
-productRouter.delete("/:id", auth, roleBasedAuth(ROLE_ADMIN), productController.deleteMyProduct);
+// Get total products count
+productRouter.get("/count", productController.getTotalCount);
+
+// Get all products
+productRouter.get("/", productController.getAllMyProduct);
+
+// Get single product
+productRouter.get("/:id", productController.getProductById);
+
+
+/* ------------------- PROTECTED ROUTES -------------------- */
+
+// Create Product (Merchant Only)
+productRouter.post(
+  "/",
+  auth,
+  roleBasedAuth(ROLE_MERCHANT),
+  validate(productSchema),
+  productController.createMyProduct
+);
+
+// Update Product (Merchant Only)
+productRouter.put(
+  "/:id",
+  auth,
+  roleBasedAuth(ROLE_MERCHANT),
+  productController.updateMyProduct
+);
+
+// Delete Product (Admin Only)
+productRouter.delete(
+  "/:id",
+  auth,
+  roleBasedAuth(ROLE_ADMIN),
+  productController.deleteMyProduct
+);
 
 export default productRouter;

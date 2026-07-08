@@ -26,10 +26,8 @@ const getById = async (id, authUser) => {
         };
     }
 
-    // 2. Database Query
     const user = await User.findById(id);
 
-    // 3. User bhetiyena bhane error handle garne
     if (!user) {
         throw {
             status: 404,

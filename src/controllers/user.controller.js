@@ -46,7 +46,6 @@ const deleteUser = async (req, res) => {
 
 const updateProfileImage = async (req, res) => {
     try {
-        console.log(req.user._id)
         const user = await userService.updateProfile(req.user._id, req.file)
         res.json(user)
     } catch (error) {

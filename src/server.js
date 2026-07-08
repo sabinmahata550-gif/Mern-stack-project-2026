@@ -30,7 +30,7 @@ app.get("/", (request, response) => {
         port: config.port
     })
 })
-app.use("/api/auth/products", upload.array('images', 5), productRouter);
+app.use("/api/products", upload.array('images', 5), productRouter);
 app.use("/api/auth", authrouter)
 app.use("/api/orders", auth, router)
 app.use("/api/users", auth, upload.single("images"), userRouter)
