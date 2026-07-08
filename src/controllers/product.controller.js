@@ -28,29 +28,20 @@ const getAllMyProduct = async (req, res) => {
         const query = req.query;
         const product = await productService.getAllProduct(query);
 
-        res.status(200).json({   // ❗ change 201 → 200
+        res.status(200).json({
             message: "All products fetched",
             data: product
         });
+
     } catch (error) {
-        console.log(error)
+        console.log("GET PRODUCTS ERROR:", error);
+
         res.status(500).json({
             message: "Failed to get products",
-            error
+            error: error.message
         });
     }
 };
-const getProductById = async (req, res) => {
-    try {
-        const userId = await productService.getProductById(req.params.id)
-        res.status(200).json({   // ❗ change 201 → 200
-            message: "getByid are successfully",
-            data: userId
-        });
-    } catch (error) {
-
-    }
-}
 // UPDATE
 const updateMyProduct = async (req, res) => {
     try {
