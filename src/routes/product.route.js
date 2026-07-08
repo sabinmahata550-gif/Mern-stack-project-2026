@@ -25,7 +25,6 @@ productRouter.get("/", productController.getAllMyProduct);
 productRouter.get("/:id", productController.getProductById);
 
 
-/* ------------------- PROTECTED ROUTES -------------------- */
 
 // Create Product (Merchant Only)
 productRouter.post(
