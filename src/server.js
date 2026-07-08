@@ -16,7 +16,7 @@ import pageRouter from './routes/page.route.js'
 const upload = multer({ storage: multer.memoryStorage() })
 
 const app = express()
-connectDB();
+await connectDB();
 connectCloudinary();
 app.use(morgan('dev'));
 app.use(cookieParser());
