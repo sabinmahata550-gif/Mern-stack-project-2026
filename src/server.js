@@ -16,7 +16,7 @@ import pageRouter from './routes/page.route.js'
 const upload = multer({ storage: multer.memoryStorage() })
 
 const app = express()
-await connectDB();
+connectDB();
 connectCloudinary();
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -35,10 +35,9 @@ app.use("/api/auth", authrouter)
 app.use("/api/orders", auth, router)
 app.use("/api/users", auth, upload.single("images"), userRouter)
 app.use("/pages",pageRouter)
-if (process.env.VERCEL !== "1") {
   app.listen(config.port, () => {
     console.log(`Example app listening on port ${config.port}`);
   });
-}
+
 
 export default app;
