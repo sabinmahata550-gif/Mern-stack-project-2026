@@ -35,6 +35,10 @@ app.use("/api/auth", authrouter)
 app.use("/api/orders", auth, router)
 app.use("/api/users", auth, upload.single("images"), userRouter)
 app.use("/pages",pageRouter)
-app.listen(config.port, () => {
-    console.log(`Example app listening on port ${config.port}`)
-})
+if (process.env.VERCEL !== "1") {
+  app.listen(config.port, () => {
+    console.log(`Example app listening on port ${config.port}`);
+  });
+}
+
+export default app;
