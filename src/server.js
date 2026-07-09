@@ -1,6 +1,7 @@
 import express, { request, response } from 'express'
 import morgan from 'morgan'
 import multer from 'multer'
+import cors from'cors'
 import config from './config/config.js'
 import connectDB from './config/db.js'
 import productRouter from './routes/product.route.js'
@@ -21,6 +22,7 @@ connectCloudinary();
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors())
 app.use(logger);
 app.set('view engine', 'hbs');
 app.get("/", (request, response) => {
