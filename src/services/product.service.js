@@ -7,24 +7,36 @@ import promptAI from "../utils/ai.js";
 const createProduct = async (data, userid, files) => {
     try {
         const uploadedFiles = files ? await uploadFile(files) : [];
-        const prometMessage = PRODUCT_DESCRIPTION_PROMPT.replace("%s", data.name).replace("%s", data.category).replace("%s", data.brand);
-        const description = data.description ?? (await promptAI(prometMessage)) ?? "No description available at the moment.";
+
+        let description = data.description;
+
+        if (!description) {
+            try {
+                const promptMessage = PRODUCT_DESCRIPTION_PROMPT
+                    .replace("%s", data.name)
+                    .replace("%s", data.category)
+                    .replace("%s", data.brand);
+
+                description = await promptAI(promptMessage);
+            } catch (error) {
+                console.error("AI Error:", error);
+                description = "No description available at the moment.";
+            }
+        }
 
         const product = await Product.create({
             ...data,
             description,
             createdBy: userid,
-            imageUrls: uploadedFiles.map(file => file.url)
+            imageUrls: uploadedFiles.map((file) => file.url),
         });
 
         return product;
-
     } catch (error) {
         console.error("Create Product Error:", error);
         throw error;
     }
 };
-
 const getAllProduct = async (query) => {
     const sort = query.sort ? JSON.parse(query.sort) : {}
     const limit = query.limit ?? 10
