@@ -23,6 +23,8 @@ const createProduct = async (data, userid, files) => {
                 description = "No description available at the moment.";
             }
         }
+        console.log("Description:", JSON.stringify(data.description));
+        console.log("Type:", typeof data.description);
 
         const product = await Product.create({
             ...data,
